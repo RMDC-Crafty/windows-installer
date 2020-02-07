@@ -83,7 +83,7 @@ def GUI():
     text_input = values[0]
     branch = text_input
     branch = branch.lower()
-    if len(os.listdir(path)) == 0:
+    if not os.listdir(path):
         clone(remote_url, path, branch)
     else:
         layout = [[sg.Text('The Directory You Entered Is Not Empty!, Please Enter A Different Directory.')]]
