@@ -1,5 +1,5 @@
 # Instructions For Use:
-#### - Run Python Installer If You Have Not In The Past (MAKE SURE THE ADD PYTHON TO PATH BOX IS TICKED)
+#### - Run "Install Crafty(With Python).bat" If You Have Not Installed Python In The Past
 #### - Run Installer.py
 #### - Enter In The Required Information
 #### - To Start Crafty Go To The Folder You Specified And Run "run_crafty.bat"
