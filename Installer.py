@@ -83,15 +83,19 @@ def GUI():
     text_input = values[0]
     branch = text_input
     branch = branch.lower()
-    if not os.listdir(path):
-        clone(remote_url, path, branch)
-    else:
-        layout = [[sg.Text('The Directory You Entered Is Not Empty!, Please Enter A Different Directory.')]]
+    if os.path.exists(path) and os.path.isdir(path):
+        if not os.listdir(path):
+            clone(remote_url,branch,path)
+        else:
+            layout = [[sg.Text('The Directory You Entered Is Not Empty!, Please Enter A Different Directory.')]]
 
-        window = sg.Window('Directory Is Not Empty!', layout)
-        window.Finalize()
-        window.TKroot.focus_force()
-        time.sleep(5)
-        window.close()
-        GUI()
+            window = sg.Window('Directory Is Not Empty!', layout)
+            window.Finalize()
+            window.TKroot.focus_force()
+            time.sleep(5)
+            window.close()
+            GUI()
+    else:
+        clone(remote_url,branch,path)
+
 GUI()
