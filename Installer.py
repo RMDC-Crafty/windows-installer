@@ -1,6 +1,9 @@
+import os
+import time
 try:
     import pygit2
     from pathlib import Path
+    import PySimpleGUI as sg
 except ImportError:
     command_list = [sys.executable, "-m", "pip", "install", "pygit2"]
     with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
@@ -11,10 +14,8 @@ except ImportError:
     import pygit2
     from pathlib import Path
 remote_url = 'https://gitlab.com/crafty-controller/crafty-web.git'
-path = input('Where Would You Like Crafty To Install To?')
-branch = input('What Branch Would You Like To Clone? Choose From: "Master", "Dev", "Snapshot" And "Beta".')
-branch = branch.lower()
-
+path = ''
+branch = ''
 
 def clone(remote_url, path, branch):
     """Clone a repo in a give path and update the working directory with
@@ -50,5 +51,46 @@ def clone(remote_url, path, branch):
         with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
             print(proc.stdout.read())
 
+def GUI():
+    global remote_url
+    global path
+    global branch
+    sg.theme("DefaultNoMoreNagging")
+    layout = [[sg.Text('Please Enter The Path You Would Like Crafty To Install To:')],
+                [sg.InputText()],
+                [sg.Submit()]]
 
-clone(remote_url, path, branch)
+    window = sg.Window('Enter A Path', layout)
+    window.Finalize()
+    window.TKroot.focus_force()
+    event, values = window.read()
+    window.close()
+
+    text_input = values[0]
+    path = text_input
+
+    layout = [[sg.Text('Please Enter The Branch You Would Like To Clone: (You Can Choose From "Master", "Dev", "Snapshot" And "Beta")')],
+              [sg.InputText()],
+              [sg.Submit()]]
+
+    window = sg.Window('Enter A Branch', layout)
+    window.Finalize()
+    window.TKroot.focus_force()
+    event, values = window.read()
+    window.close()
+
+    text_input = values[0]
+    branch = text_input
+    branch = branch.lower()
+    if len(os.listdir(path)) == 0:
+        clone(remote_url, path, branch)
+    else:
+        layout = [[sg.Text('The Directory You Entered Is Not Empty!, Please Enter A Different Directory.')]]
+
+        window = sg.Window('Directory Is Not Empty!', layout)
+        window.Finalize()
+        window.TKroot.focus_force()
+        time.sleep(5)
+        window.close()
+        GUI()
+GUI()
