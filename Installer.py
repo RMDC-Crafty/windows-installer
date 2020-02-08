@@ -1,6 +1,8 @@
 import os
 import time
 import sys
+import subprocess
+import shutil
 try:
     import pygit2
     from pathlib import Path
@@ -42,8 +44,6 @@ def clone(remote_url, path, branch):
     file = open(file_to_open, "w")
     file.write("python crafty.py -v")
     file.close()
-    import subprocess
-    import sys
     file = open(reqfile_to_open, "r")
 
     for line in file:
@@ -83,17 +83,32 @@ def GUI():
     text_input = values[0]
     branch = text_input
     branch = branch.lower()
+    DirCheck()
+def DirCheck():
+    global path
+    global remote_url
+    global branch
     if os.path.exists(path) and os.path.isdir(path):
         if not os.listdir(path):
             clone(remote_url,branch,path)
         else:
-            layout = [[sg.Text('The Directory You Entered Is Not Empty!, Please Enter A Different Directory.')]]
+            layout = [[sg.Text('The Directory You Entered Is Not Empty!, Please Enter Delete To Delete The Contents, Or Change To Choose A Different Directory')],
+                      [sg.InputText()],
+                      [sg.Submit()]]
 
             window = sg.Window('Directory Is Not Empty!', layout)
             window.Finalize()
             window.TKroot.focus_force()
-            time.sleep(5)
+            event, values = window.read()
             window.close()
+
+            text_input = values[0]
+            text_input = text_input.lower()
+            if text_input == "delete":
+                subprocess.run(["rd", path, "/s", "/q"])
+                clone(remote_url, branch, path)
+            else:
+                GUI()
             GUI()
     else:
         clone(remote_url,branch,path)
