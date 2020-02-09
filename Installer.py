@@ -2,23 +2,6 @@ import os
 import sys
 import subprocess
 import time
-try:
-    import pygit2
-    from pathlib import Path
-    import PySimpleGUI as sg
-except ImportError:
-    command_list = [sys.executable, "-m", "pip", "install", "pygit2"]
-    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
-        print(proc.stdout.read())
-    command_list = [sys.executable, "-m", "pip", "install", "pathlib"]
-    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
-        print(proc.stdout.read())
-    import pygit2
-    from pathlib import Path
-remote_url = 'https://gitlab.com/crafty-controller/crafty-web.git'
-path = ''
-branch = ''
-service = ''
 
 def clone():
     global path
@@ -126,4 +109,26 @@ def DirCheck():
             GUI()
     else:
         clone()
-GUI()
+remote_url = 'https://gitlab.com/crafty-controller/crafty-web.git'
+path = ''
+branch = ''
+service = ''
+try:
+    import pygit2
+    from pathlib import Path
+    import PySimpleGUI as sg
+    GUI()
+except ImportError:
+    command_list = [sys.executable, "-m", "pip", "install", "pygit2"]
+    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
+        print(proc.stdout.read())
+    command_list = [sys.executable, "-m", "pip", "install", "pathlib"]
+    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
+        print(proc.stdout.read())
+    command_list = [sys.executable, "-m", "pip", "install", "PySimpleGUI"]
+    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
+        print(proc.stdout.read())
+    import pygit2
+    from pathlib import Path
+    import PySimpleGUI as sg
+    GUI()
