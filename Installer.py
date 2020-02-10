@@ -39,7 +39,7 @@ def clone():
         with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
             print(proc.stdout.read())
     if service == 'yes':
-        sg.popup("Please Run service.bat In The Same Directory As This File With Administrative Privilages! (Right Click, Run As Administrator)")
+        sg.popup("Please Run Install Service.bat In The Same Directory As This File With Administrative Privilages! (Right Click, Run As Administrator)")
     else:
         sg.popup("Crafty Install Complete!")
 def GUI():
