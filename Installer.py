@@ -19,6 +19,7 @@ def clone():
 
     """
     from pathlib import Path
+    path = path + "\Crafty"
     data_folder = Path(path)
     repo = pygit2.clone_repository(remote_url, path, checkout_branch=branch)
     repo.checkout_head()
