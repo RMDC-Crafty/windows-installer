@@ -18,6 +18,7 @@ def clone():
     clone. The default is to use the remote's default branch.
 
     """
+    os.mkdir(path)
     from pathlib import Path
     path = path + "\Crafty"
     data_folder = Path(path)
