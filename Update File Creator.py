@@ -1,5 +1,5 @@
 file = open("update_crafty.bat", "a")
-file.write('set git="%CD%\cmd\git.exe"\n')
+file.write('set git="%CD%\GitPortable\cmd\git.exe"\n')
 file.write('cd Crafty\n')
 file.write('%git% pull\n')
 file.close()
