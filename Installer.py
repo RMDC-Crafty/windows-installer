@@ -18,7 +18,6 @@ def clone():
     clone. The default is to use the remote's default branch.
 
     """
-    os.mkdir(path)
     from pathlib import Path
     path = path + "\Crafty"
     data_folder = Path(path)
@@ -37,7 +36,7 @@ def clone():
 
     for line in file:
         req = line.split("/n")
-        command_list = [sys.executable, "-m", "pip", "install", req]
+        command_list = [sys.executable, "-m", "pip", "install", "--user", req]
         with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
             print(proc.stdout.read())
     if service == 'yes':
@@ -110,27 +109,13 @@ def DirCheck():
             window.close()
             GUI()
     else:
+        os.makedirs(path)
         clone()
 remote_url = 'https://gitlab.com/crafty-controller/crafty-web.git'
 path = ''
 branch = ''
 service = ''
-try:
-    import pygit2
-    from pathlib import Path
-    import PySimpleGUI as sg
-    GUI()
-except ImportError:
-    command_list = [sys.executable, "-m", "pip", "install", "pygit2"]
-    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
-        print(proc.stdout.read())
-    command_list = [sys.executable, "-m", "pip", "install", "pathlib"]
-    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
-        print(proc.stdout.read())
-    command_list = [sys.executable, "-m", "pip", "install", "PySimpleGUI"]
-    with subprocess.Popen(command_list, stdout=subprocess.PIPE) as proc:
-        print(proc.stdout.read())
-    import pygit2
-    from pathlib import Path
-    import PySimpleGUI as sg
-    GUI()
+import pygit2
+import PySimpleGUI as sg
+GUI()
+
